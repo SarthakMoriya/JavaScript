@@ -99,3 +99,56 @@ const total = new Array(tips[0] + bills[0], tips[1] + bills[1], tips[2] + bills[
 console.log(bills)
 console.log(tips)
 console.log(total)
+
+const myData = {
+    name: "Sarthak",
+    birthYear: 2003,
+    course: "bsc-IT",
+    friends: ['aarsh', 'aasish', 'shaurya'],
+    calAge: function () { return 2023 - this.birthYear },
+    summary: function () { return `Name:${this.name} \nAge:${this.calAge()} \nCourse:${this.course} \nfriends:${this.friends}` }
+}
+
+console.log(`${myData.name} has ${myData.friends.length} friends and ${myData.friends[0]} is ${myData.name}'s best friend `)
+console.log(myData.summary())
+
+///////////////////////////////////////
+// Coding Challenge #3
+
+/*
+Let's go back to Mark and John comparing their BMIs! This time, let's use objects to implement the calculations! Remember: BMI = mass / height ** 2 = mass / (height * height). (mass in kg and height in meter)
+
+1. For each of them, create an object with properties for their full name, mass, and height (Mark Miller and John Smith)
+2. Create a 'calcBMI' method on each object to calculate the BMI (the same method on both objects). Store the BMI value to a property, and also return it from the method.
+3. Log to the console who has the higher BMI, together with the full name and the respective BMI. Example: "John Smith's BMI (28.3) is higher than Mark Miller's (23.9)!"
+
+TEST DATA: Marks weights 78 kg and is 1.69 m tall. John weights 92 kg and is 1.95 m tall.
+
+GOOD LUCK 😀
+*/
+
+
+
+const markData = {
+    name: "Mark",
+    height: 1.69,
+    weight: 78,
+    calBMI: function () {
+        return this.weight / this.height ** 2;
+    }
+}
+
+const johnData = {
+    name: "John",
+    height: 1.95,
+    weight: 92,
+    calBMI: function () {
+        return this.weight / this.height ** 2;
+    }
+}
+
+const log=johnData.calBMI() >markData.calBMI() ? `${johnData.name}'s BMI ${johnData.calBMI()} is greater than ${markData.name}'s BMI ${markData.calBMI()}`:`${markData.name}'s BMI ${markData.calBMI()} is greater than ${johnData.name}'s BMI ${johnData.calBMI()}`
+
+console.log(log)
+console.log(log)
+console.log(log)
