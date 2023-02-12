@@ -147,8 +147,91 @@ const johnData = {
     }
 }
 
-const log=johnData.calBMI() >markData.calBMI() ? `${johnData.name}'s BMI ${johnData.calBMI()} is greater than ${markData.name}'s BMI ${markData.calBMI()}`:`${markData.name}'s BMI ${markData.calBMI()} is greater than ${johnData.name}'s BMI ${johnData.calBMI()}`
+const log = johnData.calBMI() > markData.calBMI() ? `${johnData.name}'s BMI ${johnData.calBMI()} is greater than ${markData.name}'s BMI ${markData.calBMI()}` : `${markData.name}'s BMI ${markData.calBMI()} is greater than ${johnData.name}'s BMI ${johnData.calBMI()}`
 
 console.log(log)
-console.log(log)
-console.log(log)
+
+
+const years = [1999, 2003, 1959, 1964, 2001, 2019];
+const ages = [];
+
+for (let i = 0; i < years.length; i++) {
+    // ages.push(2023 - years[i]);
+}
+for (let i = 0; i < years.length; i++) {
+    // console.log(ages[i])
+}
+
+let randNum1 = Math.trunc(Math.random() * 6) + 1
+let randNum2 = Math.trunc(Math.random() * 6) + 1
+
+while (randNum1 !== randNum2) {
+    // console.log(`Player1 rolled ${randNum1}`, `Player2 rolled ${randNum2}`)
+    randNum1 = Math.trunc(Math.random() * 6) + 1
+    randNum2 = Math.trunc(Math.random() * 6) + 1
+}
+
+if (randNum1 === randNum2) {
+    console.log(`Player1 rolled ${randNum1}`, `Player2 rolled ${randNum2}`)
+    // console.log("You Both Got Same Choice ")
+}
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/*
+Let's improve Steven's tip calculator even more, this time using loops!
+
+1. Create an array 'bills' containing all 10 test bill values
+2. Create empty arrays for the tips and the totals ('tips' and 'totals')
+3. Use the 'calcTip' function we wrote before (no need to repeat) to calculate tips and total values (bill + tip) for every bill value in the bills array. Use a for loop to perform the 10 calculations!
+
+TEST DATA: 22, 295, 176, 440, 37, 105, 10, 1100, 86 and 52
+
+HINT: Call calcTip in the loop and use the push method to add values to the tips and totals arrays 😉
+
+4. BONUS: Write a function 'calcAverage' which takes an array called 'arr' as an argument. This function calculates the average of all numbers in the given array. This is a DIFFICULT challenge (we haven't done this before)! Here is how to solve it:
+  4.1. First, you will need to add up all values in the array. To do the addition, start by creating a variable 'sum' that starts at 0. Then loop over the array using a for loop. In each iteration, add the current value to the 'sum' variable. This way, by the end of the loop, you have all values added together
+  4.2. To calculate the average, divide the sum you calculated before by the length of the array (because that's the number of elements)
+  4.3. Call the function with the 'totals' array
+
+GOOD LUCK 😀
+*/
+
+const bills1 = new Array(22, 295, 176, 440, 37, 105, 10, 1100, 86, 52);
+const tips1 = new Array();
+const total1 = new Array();
+
+for (let i = 0; i < bills1.length; i++) {
+    // const x = (bills1[i] >= 50 && bills1[i] <= 300) ? bills1[i] * .15 : bills1[i] * .2
+    // console.log(x)
+    // tips1.push((bills1[i] >= 50 && bills1[i] <= 300) ? bills1 * .15 : bills1 * .2)
+    if (bills1[i] > 50 && bills1[i] <= 300) {
+        tips1.push(bills1[i] * .15)
+        total1.push(bills1[i] + tips1[i])
+
+    }
+    else if (bills1[i] < 50) {
+        tips1.push(0)
+        total1.push(bills1[i] + tips1[i])
+
+    } else {
+        tips1.push(bills1[i] * .2)
+        total1.push(bills1[i] + tips1[i])
+
+    }
+}
+
+for (let i = 0; i < total1.length; i++) { console.log(`Bill:${bills1[i]} \nTip:${tips1[i]} \nTotalBill:${total1[i]}`) }
+
+const calcAvg = arr => {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+    console.log("Average::" + Math.trunc(sum / arr.length))
+}
+
+calcAvg(total1)
+
+// 
