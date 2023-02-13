@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Pig Game</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Pig Game</title>
+</head>
+
+<body>
+  <div class="overlay">
+    <div class="modal">
+      <button class="close-modal">&times;</button>
+      <p>
+      <h1>RULES</h1>
+      <ul>
+        <li>
+          <h2>First to 30 points wins!</h2>
+        </li>
+        <li>
+          <h2>If 1 occurs current score resets</h2>
+        </li>
+        <li>
+          <h2>Use hold to store current score</h2>
+        </li>
+      </ul>
+      </p>
+    </div>
     <main>
       <section class="player player--0 player--active">
         <h2 class="name" id="name--0">Player 1</h2>
@@ -32,5 +52,7 @@
       <button class="btn btn--hold">📥 Hold</button>
     </main>
     <script src="script.js"></script>
-  </body>
+  </div>
+</body>
+
 </html>
