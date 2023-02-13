@@ -109,8 +109,8 @@ btnNew.addEventListener('click', function () {
     document.getElementById('name--0').textContent = 'Player1'
     document.querySelector('.player--0').classList.remove('player--winner')
 
-    btnRoll.classList.toggle('hidden')
-    btnHold.classList.toggle('hidden')
+    btnRoll.classList.remove('hidden')
+    btnHold.classList.remove('hidden')
 
     name1 = document.getElementById('name--0').textContent = p1;
     name2 = document.getElementById('name--1').textContent = p2;
