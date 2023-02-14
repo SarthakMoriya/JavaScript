@@ -46,7 +46,9 @@ btnRoll.addEventListener('click', () => {
     } else {
         //SAVE THE CURRENT SCORE TO 0
         activePlayer === 1 ? total1.textContent = 0 : total2.textContent = 0
+        activePlayer === 1 ? curr1.textContent = 0 : curr2.textContent = 0
         //ACTIVE PLAYER CHANGES
+
         activePlayer = activePlayer === 1 ? 2 : 1;
         currentScore = 0; //reset the current score 
         player1.classList.toggle('player--active') // toggle active player animation
