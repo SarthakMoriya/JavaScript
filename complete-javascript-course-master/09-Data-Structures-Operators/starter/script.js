@@ -182,7 +182,7 @@ const { team1, team2, x: draw } = game.odds
 game.printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich')
 
 const winner = (game.odds.team1 > game.odds.team2 && 'TEAM1') || 'TEAM2'
-console.log(winner)
+// console.log(winner)
 
 
 // console.log(undefined || 'Winner')
@@ -193,23 +193,23 @@ console.log(winner)
 
 const { openingHours } = restaurant;
 // console.log(openingHours, typeof openingHours);
-console.log(Object.keys(openingHours)) //Returns an array of keys
-console.log(Object.values(openingHours))//returns an array of values
-console.log(Object.entries(openingHours)) //Every object item is returns as and array element ie each element of array is array itself where key is at 0th index and value at 1st index
+// console.log(Object.keys(openingHours)) //Returns an array of keys
+// console.log(Object.values(openingHours))//returns an array of values
+// console.log(Object.entries(openingHours)) //Every object item is returns as and array element ie each element of array is array itself where key is at 0th index and value at 1st index
 
 const days = Object.keys(openingHours)
-console.log("Days we are open :", ...days)
+// console.log("Days we are open :", ...days)
 
 for (let odays of days) {
-  console.log(odays)
+  // console.log(odays)
 }
 
 const entries = Object.entries(openingHours)
-console.log(entries)
+// console.log(entries)
 
 for (let [day, { open, close }] of entries) {
   // const { open, close } = time
-  console.log(`We are open on ${day} at ${open}:00-${close}:00`)
+  // console.log(`We are open on ${day} at ${open}:00-${close}:00`)
 }
 
 const game1 = {
@@ -255,7 +255,7 @@ const game1 = {
     for (let i = 0; i < numbers.length; i++) {
       console.log(numbers[i]);
     }
-    console.log("Goals Scored::", numbers.length)
+    // console.log("Goals Scored::", numbers.length)
   }
 };
 
@@ -285,28 +285,28 @@ GOOD LUCK 😀
 
 //1)CONSOLE ALL PLAYERS WHO GOAL AND NUMBER OF GOAL 1st 2nd 3rd...
 const { scored } = game;
-console.log(scored.entries())
+// console.log(scored.entries())
 
 //For index we use .entries()
 for (let [i, player] of scored.entries()) {
-  console.log(`Goal ${i + 1} was Scored by ${player}`)
+  // console.log(`Goal ${i + 1} was Scored by ${player}`)
 }
 
 // 2)CALCULATE AVERAGE
 const { odds } = game1;
-console.log(Object.values(odds))
+// console.log(Object.values(odds))
 
-let total=0;
-for(let x of Object.values(game1.odds)){
-    total+=x;
-    // console.log(x)
+let total = 0;
+for (let x of Object.values(game1.odds)) {
+  total += x;
+  // console.log(x)
 }
-console.log("Average::",total/(Object.values(game1.odds).length))
+// console.log("Average::",total/(Object.values(game1.odds).length))
 
 // 3)CONSOLE ODDS IN FORMATTED WAY
-console.log(`Odd Victory of ${game1.team1}::${game1.odds.team1}`)
-console.log(`Odd Victory of ${game1.team2}::${game1.odds.team2}`)
-console.log(`Odd Victory of DRAW::${game1.odds.x}`)
+// console.log(`Odd Victory of ${game1.team1}::${game1.odds.team1}`)
+// console.log(`Odd Victory of ${game1.team2}::${game1.odds.team2}`)
+// console.log(`Odd Victory of DRAW::${game1.odds.x}`)
 
 // {
 //   Gnarby: 1,
@@ -315,13 +315,141 @@ console.log(`Odd Victory of DRAW::${game1.odds.x}`)
 // }
 
 // 4)
-console.log(scored)
-let scorers={};
+// console.log(scored)
+let scorers = {};
 
-for(let [i,players] of Object.entries(scored)){
+for (let [i, players] of Object.entries(scored)) {
   // console.log(i,players)
-  scorers[players]=0;
+  scorers[players] = 0;
 }
 
+// console.log(scorers)
 
-console.log(scorers)
+const airline = 'TATA TATA TATA Airlines'
+const plane = 'TB3738'
+
+console.log(airline.indexOf(airline[airline.length - 1]))
+console.log(airline.indexOf('TATA'))
+console.log(airline.lastIndexOf('TATA'))//Returns last index 
+
+//SLICE (beg,end) beg is included
+//String is primitive dt immutable
+console.log(airline.slice(5))
+console.log(airline.slice(5, 7))
+console.log(airline.slice(0, 2))
+console.log(airline.slice(0, -1))
+
+
+const checkMiddleSeat = seat => {
+  //B and C are Middle
+  return seat.includes("B") || seat.includes("C")
+}
+
+console.log(checkMiddleSeat('11B'))
+console.log(checkMiddleSeat('11D'))
+console.log(checkMiddleSeat('11C'))
+
+//toUpperCase() , toLowerCase()
+//Task--> convert to Sarthak , email check
+
+const myName = "SArthaK";
+const correctName = myName.toLowerCase();
+const firstLetter = correctName[0].toUpperCase() + (correctName.slice(1));
+console.log(myName, correctName, firstLetter)
+
+const emailInp = '   SArThaK@GMail.com  '
+let emailLower = emailInp.toLowerCase();
+//trimStart(),trimEnd(),trim()
+emailLower = emailLower.trimStart();//Removes extra white spaces from left and right not mid
+console.log(emailInp, emailLower)
+console.log(emailInp.toLowerCase().trim())
+
+const priceUs = '234.99$';
+const priceInd = priceUs.replace('$', 'INR')
+// console.log(priceUs, priceInd)
+
+const announcement = 'All passengers are requested to come to door 29!,door 29!';
+console.log(announcement.replaceAll('door', 'gate'))
+
+//REGULAR EXPRESSIONS
+//g means all occurrencies
+console.log(announcement.replace(/door/g, 'gate'))
+
+//3rd Part
+const data = 'Sarthak 19 BSC-IT DAV ';
+console.log(data.split(' '))
+const dataArr = data.split(' ')
+const [name1, age, course, clg] = data.split(' ')
+console.log(name1, age, course, clg)
+
+console.log(dataArr.join(' '))
+
+//Padding to add characters to start or end takes 2 args first as new size of string and other as the characters to add
+
+let s = 'Sarthak is Good Boi!'
+console.log(s.padStart(s.length + 5, '+'))
+console.log(s.padEnd(s.length + 5, '+'))
+
+function encryptCard(number) {
+  let CCNum = String(number).slice(-4);
+  console.log(CCNum.padStart(CCNum.length + 12, '*'))
+}
+encryptCard(1234567788912345)
+encryptCard(3422345987566755)
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+THIS TEST DATA (pasted to textarea)
+underscore_case
+ first_name
+Some_Variable 
+  calculate_AGE
+delayed_departure
+
+SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+underscoreCase      ✅
+firstName           ✅✅
+someVariable        ✅✅✅
+calculateAge        ✅✅✅✅
+delayedDeparture    ✅✅✅✅✅
+
+HINT 1: Remember which character defines a new line in the textarea 😉
+HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
+
+Afterwards, test with your own test data!
+
+GOOD LUCK 😀
+*/
+// underscore_case
+//  first_name
+// Some_Variable 
+//   calculate_AGE
+// delayed_departure
+
+const inputR = new Array('underscore_case', "first_name", 'Some_Variable', 'calculate_Age', 'delayed_Departure')
+
+const lowered = new Array();
+for (let i of inputR) {
+  lowered.push(i.toLowerCase())
+}
+// console.log(lowered)
+
+const camelcase = new Array();
+for (let i of lowered) {
+  let indOfUnderscore = i.indexOf('_')
+  i=i.replace('_','')
+  // console.log(i)
+  let elAtInd=i[indOfUnderscore]
+  i=i.replace(elAtInd,i[indOfUnderscore].toUpperCase())
+  console.log(i,indOfUnderscore,i[indOfUnderscore])
+  camelcase.push(i)
+}
+// console.log(camelcase)
