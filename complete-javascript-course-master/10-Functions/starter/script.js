@@ -109,3 +109,33 @@ greet2("HELLO")("MONY")
 
 const greet3 = greet => name => console.log(`${greet} ${name}`)
 
+const tataAir = {
+    name: 'TATA',
+    bookings: [],
+    bookFlight(flightNo, naam) {
+        console.log(`${naam} booked a flight ${this.name}${flightNo}! `)
+        
+        this.bookings.push({ flight: `${naam} booked a flight ${this.name}${flightNo}! ` })
+    }
+}
+
+// tataAir.bookFlight('786','Sarthak')
+// tataAir.bookFlight('786','Jatin')
+// console.log(...tataAir.bookings)
+
+const neoAir={
+    name: 'Neo',
+    bookings: [],
+    bookTicket:tataAir.bookFlight,
+}
+
+const bookCommon=tataAir.bookFlight;
+bookCommon('786','Mini')
+bookCommon('786','Mini')
+bookCommon('786','Mini')
+bookCommon('786','Mini')
+bookCommon('786','Mini')
+bookCommon('786','Mini')
+bookCommon('786','Mini')
+
+// neoAir.bookTicket('765','Mony')
