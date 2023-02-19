@@ -71,7 +71,63 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 // let's goe
+
+//SPLICE-->MUTATES ORIGINAL ARRAY AND RETURN THE REMOVED PART ,SAME PART IS REMOVED FROM ORIGINAL ARRAY
+let a1 = ['a', 'b', 'c', 'd', 'e'];
+const b1 = a1.splice(0, 3);
+// console.log(a1)
+// console.log(b1)
+//to remove last element
+// console.log([1,2,3,4].splice(-1))
+
+// REVERSE --> Mutates the original array
+let a2 = ['a', 'b', 'c', 'd', 'e'];
+// console.log(a2.reverse())
+// console.log(a2)
+
+// CONCAT -->does not mutates original array
+const letters = a2.reverse().concat(['f', 'g', 'h', 'i'])
+// console.log(letters)
+
+// JOIN --> not mutates
+// const s1=letters.join('--');
+// console.log(s1,letters)
+
+// AT method  , works same on strings too
+// console.log(letters.at(2))
+// console.log(letters.at(90)) // undefined
+
+// to get last element
+// console.log(letters[letters.length-1])
+// console.log(letters.slice(-1)[0])
+// console.log((letters.at(-1)))
+// console.log((letters.at(-2)))
+
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// enteries returns each element as array including [index,value],...same
+// we used arrays destructing [index,value] of arr.enteries()
+for (let [i, mov] of movements.entries()) {
+  mov > 0 ? console.log(`Transaction No:${i}\nCredited ${mov}`) : console.log(`Transaction No:${i}\nDebited ${Math.abs(mov)}`)
+}
+
+// FOREACH LOOP
+// takes callback function which executes for each element of array
+console.log("----ForEACH----")
+movements.forEach(function (mov, ind, arr) {
+  if (mov > 0) {
+    console.log(`Transaction Number ${ind + 1} of ${arr.length} CREDITED 
+    ${Math.abs(mov)}`)
+  } else {
+    console.log(`Transaction Number ${ind + 1} of ${arr.length} DEBITED 
+    ${Math.abs(mov)}`)
+  }
+})
+
+// foreach loop passes currEl,index,currArray in same order
+// continue and break does not works in forEach loop ,does in forOf loop
