@@ -348,3 +348,12 @@ console.log("AVERAGE DOG AGE::" + averageHumanDog([5, 2, 4, 1, 15, 8, 3]))
 // const firstWithdrawal=movements.find(mov=>mov<0)
 const firstWithdrawal=movements.find(mov=>mov===1300)
 console.log(firstWithdrawal)
+
+const accLogged=accounts.find(acc=>acc.owner ==='Jessica Davis')
+console.log(accLogged)
+
+for(const acc of accounts){
+  if(acc.owner === 'Jessica Davis'){
+    console.log(acc)
+  }
+}
