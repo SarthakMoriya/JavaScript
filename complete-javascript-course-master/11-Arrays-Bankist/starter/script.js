@@ -492,41 +492,41 @@ const firstWithdrawal = movements.find(mov => mov === 1300)
 // ------------SOME METHOD--------------
 //return true if any of the value in array passes the condition
 // whereas includes method checks for equality for only 1 value
-console.log(movements)
-console.log(movements.includes(-1300)) //False
-console.log(movements.some(mov => mov > 1200)) //True
+// console.log(movements)
+// console.log(movements.includes(-1300)) //False
+// console.log(movements.some(mov => mov > 1200)) //True
 
 // ------------EVERY METHOD--------------
 //return true if all of the values in array passes the condition
-console.log(movements.every(mov => mov > 1200)) //True
+// console.log(movements.every(mov => mov > 1200)) //True
 
 // ------------FLAT METHOD--------------
 // if we have nested arrays we can loop out all elements in a single array using this method with take optional param which is level of nested arryas inside
 // [1,2,3,[4,5,6],[7,8,9,10]] //level 1 default
 // [1,2,3,[4,[5,6]],[7,8,[9,10]]] //level 2
 
-console.log([1, 2, 3, [4, 5, 6]].flat())
-console.log([1, 2, 3, [4, [5], 6]].flat(5))
+// console.log([1, 2, 3, [4, 5, 6]].flat())
+// console.log([1, 2, 3, [4, [5], 6]].flat(5))
 // calculate balanceof all accounts
 const alltransactions = accounts.map(acc => acc.movements)
-console.log(alltransactions.flat().reduce((acc, mov) => acc + mov, 0))
+// console.log(alltransactions.flat().reduce((acc, mov) => acc + mov, 0))
 
 // ------------FLATMAP METHOD--------------
 // combines map nad flat method together but goe only one level deep
-console.log(accounts.flatMap(acc => acc.movements))
+// console.log(accounts.flatMap(acc => acc.movements))
 
 
 // ------------SORT METHOD--------------
 // sorth method simply sorts on basis of Strings alphabetically and turn other dtyps to string if we passed number... mutates original array
 let owners = ['sarthak', 'jatin', 'Shauraya', 'aarsh', 'karsh']
-console.log(owners, owners.sort(), "AFTER SORTING", owners)
+// console.log(owners, owners.sort(), "AFTER SORTING", owners)
 
 // numberd sort krne hai to
 // takes a callback which takes two args a,b which are current and next values or simply two consecutive values
 // hogatoh bas ascending yah descending order
 // return < 0 ---> A,B (keep order)
 // return > 0 ---> B,A (Switch order)
-
+// console.log([1, 20, 30, 1, 2, 3].sort())
 // AESC
 console.log(movements.sort((a, b) => {
   if (a > b) return -1; //switch
@@ -541,7 +541,7 @@ console.log(movements.sort((a, b) => {
 }))
 
 // we are returning 1 or -1 we can make it one line using
-console.log(movements.sort((a, b) => a - b))
+// console.log(movements.sort((a, b) => a - b))
 // if a-b > 0 is same as return 1;
 // if a-b < 0 is same as return -1;
 
@@ -550,4 +550,63 @@ console.log(movements.sort((a, b) => a - b))
 // new Array(7) if we created a new array using this array constructor and pass only one value to it then it makes aempty array of size 7 and not a array having single element as 7 and we can een use map method to change every element of array
 
 // fill method mutates the array and fills with value passed
+// array1.fill(value,start,end)
 
+let arr1 = new Array(10);
+arr1.fill(10, 0, 2)
+arr1.fill(10, 3, 6)
+
+// console.log(arr1)
+
+
+// -------------------Array.From -----------------
+// above procedure takes two steps first create using new array then fill with same value
+// but faster way is to use array.from
+
+const z1 = Array.from({ length: 10 }, () => 1)
+const z2 = Array.from({ length: 10 }, (_, i) => i + 1)
+// const z3=Array.from({length:10},(curr,i)=>)
+// console.log(z1)
+// console.log(z2)
+// console.log(z3)
+
+
+// -----------ARRAY METHOD PRACTISE--------------
+// 1) CALCULATE ALL BANK BALANCE
+// console.log(accounts)
+const bankBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .filter(mov => mov > 0)
+  .reduce((acc, mov) => acc + mov, 0)
+console.log("Bank Balance::", bankBalance)
+
+// 2) CALCULATE ALL BANK Deposit >1000
+
+const bankBalance1000 = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .filter(mov => mov > 1000)
+  .reduce((acc, mov, i, arr) => arr.length, 0)
+console.log("Bank Balance > 1000::", bankBalance1000)
+
+// 3) calculate sum and widthdrawal sum of all accounts
+
+const sumWithdrawal = accounts.flatMap(acc => acc.movements).reduce((sum, curr) => {
+  curr > 0 ? sum.deposit += curr : sum.withdrawal += curr
+  return sum
+}, { deposit: 0, withdrawal: 0 })
+
+console.log(sumWithdrawal)
+
+// 4) convert to title case leaving vowels
+let line = 'the tate is tatto' //The Tate is Tattoo
+const ans = line.split(' ').map(word => {
+  if (word[0] !== 'a' && word[0] !== 'e' && word[0] !== 'i' && word[0] !== 'o' && word[0] !== 'u') {
+    return word[0].toUpperCase() + word.slice(1);
+  } else {
+    return word
+  }
+}).join(' ')
+
+console.log(ans)
