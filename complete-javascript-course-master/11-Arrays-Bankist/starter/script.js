@@ -81,7 +81,7 @@ const printMovements = (movements) => {
   })
 }
 
-printMovements(account1.movements)
+
 
 
 // ------------CREATING USERNAME FOR LOGIN-------------
@@ -103,33 +103,171 @@ buildUserNames(accounts)
 // ------------SHOWING BALANCE-------------
 labelBalance;
 
-const calBalance = (account) => {
-  return account.movements.reduce((acc, mov) => acc + mov, 0)
-}
-labelBalance.textContent = `${calBalance(account4)}€`
-
 // ------------SHOWING TOTal balance ,debits interest-------------
+const calBalance = (account) => {
+  account.balance = account.movements.reduce((acc, mov) => acc + mov, 0)
+  return account.balance;
+}
+
 const calInputs = mov =>
   mov.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
-
-labelSumIn.textContent = `${calInputs(account1.movements)}€`;
 
 const calDebits = mov =>
   mov.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0)
 
-labelSumOut.textContent = `${Math.abs(calDebits(account1.movements))}€`
+const calInterest = account => {
+  console.log(account.movements)
+  let filteredArray = account.movements.filter(mov => mov > 0)
+  console.log(filteredArray)
+  let single = filteredArray.reduce((acc, mov) => (acc + mov) / 100, 0)
+  console.log(single)
+  return single;
+}
 
-const calInterest = mov =>
-  mov.filter(mov => mov > 0).reduce((acc, mov) => (acc + mov) * .2, 0)
 
-labelSumInterest.textContent = `${Math.abs(calInterest(account1.movements))}€`
 //ADDING NEW CREATED USERSNAME TO USER OBJECT ; usernmes was array containing usernames created from line 90
 // accounts.map((user, i) => {
 //   user['username'] = usernames[i];
 // })
 
+let currentAccount;
+let sort = true;
+
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value)
+
+  if (currentAccount && currentAccount.pin === Number(inputLoginPin.value)) {
+    //welcome message
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`
+    // set opacity
+    containerApp.style.opacity = 100;
+    //balance
+    labelBalance.textContent = `${calBalance(currentAccount)}€`
+    //movements/summary of interest balance ...
+    // movements
+    printMovements(currentAccount.movements)
+    labelSumIn.textContent = `${calInputs(currentAccount.movements)}€`;
+    // debits
+    labelSumOut.textContent = `${Math.abs(calDebits(currentAccount.movements))}€`
+    // interest
+    labelSumInterest.textContent = `${Math.floor(calInterest(currentAccount))}€`
+    // inputs
+    labelSumIn.textContent = `${calInputs(currentAccount.movements)}€`;
+
+    // CLear input fields
+    inputLoginPin.value = '';
+    inputLoginUsername.value = ''
+    inputLoginPin.blur();
+  }
+})
+
+// -----------------TRANSFER MONEY------------------
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const receiver = accounts.find(acc => acc.username === inputTransferTo.value)
+  const amount = Number(inputTransferAmount.value)
+
+  // Preventing fake transfers
+  if (amount > 0 &&
+    amount <= currentAccount.balance &&
+    receiver &&
+    receiver.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(-amount)
+    receiver.movements.push(amount)
+
+    //balance
+    labelBalance.textContent = `${calBalance(currentAccount)}€`
+    //movements/summary of interest balance ...
+    // movements
+    printMovements(currentAccount.movements)
+    labelSumIn.textContent = `${calInputs(currentAccount.movements)}€`;
+    // debits
+    labelSumOut.textContent = `${Math.abs(calDebits(currentAccount.movements))}€`
+    // interest
+    labelSumInterest.textContent = `${Math.floor(calInterest(currentAccount))}€`
+    // inputs
+    labelSumIn.textContent = `${calInputs(currentAccount.movements)}€`;
+
+    // clear fields
+    inputTransferAmount.value = '';
+    inputTransferTo.value = ''
+  }
+})
+
+// --------------------DELETE ACCOUNT--------------------
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  const pin = Number(inputClosePin.value);
+  // Find User
+  const user = accounts.find(acc => acc.username === inputCloseUsername.value)
+
+  // If User then delete
+  if (user && user.pin === pin) {
+    const indOfAcc = accounts.findIndex(acc => acc.username === inputCloseUsername.value)
+    // Remove account
+    accounts.splice(indOfAcc, 1);
+
+    // logg out
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = `Log in to get started`
+
+    inputCloseUsername.value = ''
+    inputClosePin.value = ''
+  }
+})
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  //the user must have a deposit  which is 10 % of loan requested
+  const amount = Number(inputLoanAmount.value);
+  if (amount > 0 && currentAccount.movements.some(mov => mov > amount * .1)) {
+    currentAccount.movements.push(amount);
+    // Update UI
+    //balance
+    labelBalance.textContent = `${calBalance(currentAccount)}€`
+    //movements/summary of interest balance ...
+    // movements
+    printMovements(currentAccount.movements)
+    labelSumIn.textContent = `${calInputs(currentAccount.movements)}€`;
+    // debits
+    labelSumOut.textContent = `${Math.abs(calDebits(currentAccount.movements))}€`
+    // interest
+    labelSumInterest.textContent = `${Math.floor(calInterest(currentAccount))}€`
+    // inputs
+    labelSumIn.textContent = `${calInputs(currentAccount.movements)}€`;
+
+    inputLoanAmount.value = '';
+  }
+})
+
+
+//  ----------------------SORT MOVEMENTS--------------
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log("SORT INSIDE FUNCTION", sort)
+  console.log("MOVEMENT BEFORE SORT::" + currentAccount.movements)
+  if (sort) {
+    currentAccount.movements = currentAccount.movements.sort((a, b) => {
+      if (a > b) return -1; //switch
+      if (a < b) return 1;
+    })
+  }
+  else {
+    currentAccount.movements = currentAccount.movements.sort((a, b) => {
+      if (a > b) return 1; //switch
+      if (a < b) return -1;
+    });
+
+  }
+  sort = !sort;
+  printMovements(currentAccount.movements)
+  console.log("SORT AT END OF FUNCTION:" + sort)
+  console.log("MOVEMENT AFTER SORT::" + currentAccount.movements)
+})
 /*
- 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -257,34 +395,34 @@ const eurTOINR = 88.70;
 
 // const indianMov = movements.map((mov) => mov * eurTOINR)
 const indianMov = movements.map((mov, i, arr) => {
-  console.log(`Transaction ${i + 1} of ${arr.length} for ${mov}`)
+  // console.log(`Transaction ${i + 1} of ${arr.length} for ${mov}`)
   return mov * eurTOINR
 })
-console.log(indianMov)
+// console.log(indianMov)
 
 // --------------FILTER METHOD--------------- 
 
 const posValues = movements.filter(mov => mov > 0)
 const withdrawal = movements.filter(mov => mov < 0)
-console.log(posValues, withdrawal)
+// console.log(posValues, withdrawal)
 
 // --------------REDUCE METHOD--------------- 
 // takes 4 parameters accumulator ,curr ,index ,array wherewe can also set accumulator initial value at end return one single value
 // actually we are returning accumulator to next iterator so calculation or other action being performed!
 
 const balance = movements.reduce((acc, mov, i, arr) => {
-  console.log(`Transaction Number ${i} of ${arr.length} :: ${mov} Balance :${acc + mov}`)
+  // console.log(`Transaction Number ${i} of ${arr.length} :: ${mov} Balance :${acc + mov}`)
   return acc + mov;
 }, 0)
 
-console.log("CURRENT BALANCE " + balance)
+// console.log("CURRENT BALANCE " + balance)
 
 const maxVal = movements.reduce((acc, mov) => acc > mov ? acc : mov, movements.at(0))
 
-console.log(maxVal)
+// console.log(maxVal)
 
 const indVal = movements.map(mov => mov * eurTOINR).filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
-console.log(indVal)
+// console.log(indVal)
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -346,15 +484,70 @@ console.log("AVERAGE DOG AGE::" + averageHumanDog([5, 2, 4, 1, 15, 8, 3]))
 // find method works in similar way filiter works but instead of returning a new value at every iteration it return first value which statisfies the action true or false ke jaise hi compare hote hai elements first true element is returned
 
 // const firstWithdrawal=movements.find(mov=>mov<0)
-const firstWithdrawal=movements.find(mov=>mov===1300)
-console.log(firstWithdrawal)
+const firstWithdrawal = movements.find(mov => mov === 1300)
+// console.log(firstWithdrawal)
 
-const accLogged=accounts.find(acc=>acc.owner ==='Jessica Davis')
-console.log(accLogged)
 
-for(const acc of accounts){
-  if(acc.owner === 'Jessica Davis'){
-    console.log(acc)
-  }
-}
-// yoyoyo
+
+// ------------SOME METHOD--------------
+//return true if any of the value in array passes the condition
+// whereas includes method checks for equality for only 1 value
+console.log(movements)
+console.log(movements.includes(-1300)) //False
+console.log(movements.some(mov => mov > 1200)) //True
+
+// ------------EVERY METHOD--------------
+//return true if all of the values in array passes the condition
+console.log(movements.every(mov => mov > 1200)) //True
+
+// ------------FLAT METHOD--------------
+// if we have nested arrays we can loop out all elements in a single array using this method with take optional param which is level of nested arryas inside
+// [1,2,3,[4,5,6],[7,8,9,10]] //level 1 default
+// [1,2,3,[4,[5,6]],[7,8,[9,10]]] //level 2
+
+console.log([1, 2, 3, [4, 5, 6]].flat())
+console.log([1, 2, 3, [4, [5], 6]].flat(5))
+// calculate balanceof all accounts
+const alltransactions = accounts.map(acc => acc.movements)
+console.log(alltransactions.flat().reduce((acc, mov) => acc + mov, 0))
+
+// ------------FLATMAP METHOD--------------
+// combines map nad flat method together but goe only one level deep
+console.log(accounts.flatMap(acc => acc.movements))
+
+
+// ------------SORT METHOD--------------
+// sorth method simply sorts on basis of Strings alphabetically and turn other dtyps to string if we passed number... mutates original array
+let owners = ['sarthak', 'jatin', 'Shauraya', 'aarsh', 'karsh']
+console.log(owners, owners.sort(), "AFTER SORTING", owners)
+
+// numberd sort krne hai to
+// takes a callback which takes two args a,b which are current and next values or simply two consecutive values
+// hogatoh bas ascending yah descending order
+// return < 0 ---> A,B (keep order)
+// return > 0 ---> B,A (Switch order)
+
+// AESC
+console.log(movements.sort((a, b) => {
+  if (a > b) return -1; //switch
+  if (a < b) return 1; //no switch
+  // agar a is greater than return >0 ie return 1 true krde switch vice-versa
+}))
+// DESC
+console.log(movements.sort((a, b) => {
+  if (a > b) return 1; //switch
+  if (a < b) return -1; //no switch
+  // agar a is greater than return >0 ie return 1 true krde switch vice-versa
+}))
+
+// we are returning 1 or -1 we can make it one line using
+console.log(movements.sort((a, b) => a - b))
+// if a-b > 0 is same as return 1;
+// if a-b < 0 is same as return -1;
+
+
+// ------------FILL METHOD--------------
+// new Array(7) if we created a new array using this array constructor and pass only one value to it then it makes aempty array of size 7 and not a array having single element as 7 and we can een use map method to change every element of array
+
+// fill method mutates the array and fills with value passed
+
