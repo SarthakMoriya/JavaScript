@@ -91,10 +91,9 @@ const displayMovements = function (movements, sort = false) {
 
     const html = `
       <div class="movements__row">
-        <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__type movements__type--${type}">${i + 1
+      } ${type}</div>
+        <div class="movements__value">${mov.toFixed(0)}€</div>
       </div>
     `;
 
@@ -104,7 +103,7 @@ const displayMovements = function (movements, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
@@ -116,7 +115,7 @@ const calcDisplaySummary = function (acc) {
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -126,7 +125,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -166,9 +165,8 @@ btnLogin.addEventListener('click', function (e) {
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
-    labelWelcome.textContent = `Welcome back, ${
-      currentAccount.owner.split(' ')[0]
-    }`;
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
+      }`;
     containerApp.style.opacity = 100;
 
     // Clear input fields
@@ -206,7 +204,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -251,3 +249,101 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// CONVERSION
+console.log(Number('234'))
+console.log(+'234')
+console.log(+'234X')
+
+// PARSING 
+console.log(Number.parseInt('23.89'))
+console.log(Number.parseInt('23.89px'))//23
+console.log(Number.parseInt('e23')) //Nan
+
+console.log(Number.parseFloat('e23'))//Nan
+console.log(Number.parseFloat('234'))//234
+console.log(Number.parseFloat('2.45rem'))//2.45
+
+console.log(Number.isNaN(20))//false
+console.log(Number.isNaN('20'))//false '20' ye string hai isko convertnhi krta yeh
+console.log(Number.isNaN(+'20'))//false 
+console.log(Number.isNaN(20 / 0))//false 
+
+// Checking if value is number
+console.log(Number.isFinite(20))//true
+console.log(Number.isFinite('20'))//false
+console.log(Number.isFinite(+'20X'))//false
+console.log(Number.isFinite(20 / 0))//false
+// Number.isInteger()
+
+
+// ------MATH FUNCTIONS --------------
+console.log(Math.sqrt(25))//5
+console.log(121 ** (1 / 2))//11
+console.log(121 ** (1 / 3))//4.9437275...
+
+// MAX()
+console.log(Math.max(1, 2, 54, 21, 34, 234, 7, 876, '90'))//does type coericion but not type parsing
+console.log(Math.max(1, 2, 54, 21, 34, 234, 7, 876, '90x'))//does type coericion but not type parsing --> NaN as '90px' was'nt converted
+
+// MIN()
+console.log(Math.min(1, 2, 54, 21, 34, 234, 7, 876, '90'))//does type coericion but not type parsing
+
+// TRUNC()
+
+console.log(Math.trunc(23.9999)) //Returns the integral part of the a numeric expression, x, removing any fractional digits. If x is already an integer, the result is x.
+console.log(Math.trunc(-23.9999))
+
+// ROUNDING INTEGERS
+console.log(Math.round(23.4))//23
+console.log(Math.round(23.5))//24
+console.log(Math.round(23.6))//24
+console.log(Math.round(-23.6))//24  if >=0.5 then n+1 else n
+console.log(Math.round(-23.4))//23
+
+console.log(Math.ceil(23.4))//24
+console.log(Math.ceil(23.5))//24  Next greatest integer
+console.log(Math.ceil(23.6))//24 
+console.log(Math.ceil(-23.6))//-23 
+
+console.log(Math.floor(23.3))//23 22 21 -- 23
+console.log(Math.floor(23.9))//Returns the greatest integer less than or equal to its numeric argument.
+console.log(Math.floor(-23.9)) //-24 -25 -26 ... so -24
+
+//  floor is better than trun method in handling neg values
+
+// RANDOM NUMBER BETWEEN MIN,MAX
+
+const randomNum = (min, max) =>
+  Math.floor(Math.random() * ((max - min) + 1) + min)
+
+console.log(randomNum(23, 56))
+
+// NUMBER SEPARATOR
+
+const diameter1 = 287460000000;//quite unreadable
+const diameter2 = 287_460_000_000;//quite unreadable
+console.log(diameter1, diameter2);
+
+
+const price = 345_99; //$345.99 cents
+
+// cannot do 3._141 or 3_.123 or _3.124 or 3.134_
+console.log(Number(23_40))//2340
+console.log(Number('23_40'))//NaN
+console.log(parseInt('2_3_456'))//2 takes rest as decimal point
+
+// Big Int
+console.log(123456789876543212345678987654321n)
+console.log(BigInt(2345432))//auto adds n to end of string
+console.log(10000000n + 200000000n)
+// cannot add bigInt and other dts
+
+console.log(20n>10)//true
+console.log(20n==20)//true
+console.log(20n===20)//false as dt is not same
+console.log(20n=='20')//true
+console.log(123456789098765n+' is huge')//removes n
+
+let a1=[0,0,0,0,0,0];
+console.log(a1.fill(1))
