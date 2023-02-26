@@ -81,7 +81,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const formatMovementDate = function (date) {
+const formatMovementDate = function (date, locale) {
   const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date1 - date2) / (1000 * 60 * 60 * 24))
 
   const daysPassed = calcDaysPassed(new Date(), date)
@@ -90,10 +90,11 @@ const formatMovementDate = function (date) {
   if (daysPassed === 1) return 'Yesterday'
   if (daysPassed <= 7) return `${daysPassed}days ago`
   else {
-    let day = `${date.getDate()}`.padStart(2, 0)
-    let month = `${date.getMonth() + 1}`.padStart(2, 0)
-    let year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    // let day = `${date.getDate()}`.padStart(2, 0)
+    // let month = `${date.getMonth() + 1}`.padStart(2, 0)
+    // let year = date.getFullYear();
+    // return `${day}/${month}/${year}`;
+    return new Intl.DateTimeFormat(locale).format(date)
   }
 }
 
@@ -106,7 +107,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const date = new Date(acc.movementsDates[i])
 
-    const displayDate = formatMovementDate(date)
+    const displayDate = formatMovementDate(date, acc.locale)
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${i + 1
@@ -172,7 +173,7 @@ const updateUI = function (acc) {
 
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, loginTimer;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -182,6 +183,7 @@ btnLogin.addEventListener('click', function (e) {
     acc => acc.username === inputLoginUsername.value
   );
   console.log(currentAccount);
+  labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(now)
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
@@ -195,6 +197,31 @@ btnLogin.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Set Log out Timer
+    let timeMin = 4;
+    let timeSec = 59;
+    if (loginTimer) clearInterval(loginTimer);
+    loginTimer = setInterval(() => {
+      labelTimer.textContent = `${String(timeMin).padStart(2, 0)}:${String(timeSec).padStart(2, 0)}`;
+      timeSec--;
+      if (timeSec < 0) {
+
+        if (Number(timeMin) <= 0 && Number(timeSec <= 0)) {
+          containerApp.style.opacity = 0;
+          labelWelcome.textContent = 'Log in to get started'
+          clearInterval(loginTimer);
+
+        } else {
+          timeSec = 59;
+          timeMin--;
+        }
+      }
+
+
+
+    }, 1000)
+
   }
 });
 
@@ -219,8 +246,9 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movementsDates.push(new Date().toISOString());
 
 
-    // Update UI
-    updateUI(currentAccount);
+    setTimeout(() => {
+      updateUI(currentAccount);
+    }, 3000)
   }
 });
 
@@ -235,7 +263,9 @@ btnLoan.addEventListener('click', function (e) {
     currentAccount.movementsDates.push(new Date().toISOString());
 
     // Update UI
-    updateUI(currentAccount);
+    setTimeout(() => {
+      updateUI(currentAccount);
+    }, 4000)
   }
   inputLoanAmount.value = '';
 });
@@ -278,6 +308,19 @@ let year = presentDay.getFullYear();
 let hrs = `${presentDay.getHours()}`.padStart(2, 0);
 let mins = presentDay.getMinutes();
 labelDate.textContent = `${day}/${month}/${year},${hrs}:${mins}`;
+
+// EXPERIMENTING DATE API
+const now = new Date();
+const options = {
+  hour: 'numeric',
+  minute: 'numeric',
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+  // weekday: 'long'
+};
+
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -418,3 +461,44 @@ console.log(new Date())//aj ki puri date wagara sab kuch
 const exampleDate = new Date(account1.movementsDates[0])
 
 console.log(exampleDate.getFullYear());
+
+// INTERNATIonalizing Numbers (INTL)
+
+let money = 1200000;
+// const options1 = {
+//   style: 'unit',
+//   unit: "mile-per-hour"
+// }
+const options1 = {
+  style: 'currency',
+  currency: 'INR'
+}
+
+console.log('US:     ', new Intl.NumberFormat('en-US').format(money))
+console.log('Ind:     ', new Intl.NumberFormat('hi').format(money))
+console.log('germany:     ', new Intl.NumberFormat('germany').format(money))
+console.log(navigator.language, new Intl.NumberFormat(navigator.language, options1).format(money))
+
+// TIME INTERVALS
+// setTimeout runs after a timeperiod
+// setIntervals runs after a timeperiod again again 
+// SETTIMEOUT takes a callback func. followed by timeinMillisecond as first mandatory argument ,followed by option arguments if we want them to be used in our callback fcn.
+
+const ingredients = ['spinach']
+
+setTimeout(() => {
+  console.log("HERE is your pizza!")
+}, 3000)
+const pizzaTimer = setTimeout((chicken, meat) => {
+  console.log("HERE is your pizza! with " + chicken + ' and ' + meat)
+}, 3000, ...ingredients)
+
+if (ingredients.includes('spinach')) {
+  clearTimeout(pizzaTimer)
+}
+
+// SETINTERVAL()
+// runns after specified interval
+// setInterval(()=>{
+//   console.log(new Date())
+// },1500)
