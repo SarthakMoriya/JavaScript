@@ -428,10 +428,11 @@ let a1 = [0, 0, 0, 0, 0, 0];
 
 const date = new Date();
 console.log(date)
-console.log(new Date('january 13 ,2022'))
+console.log(new Date('january 13  17:50'))
 
 account2.movementsDates.forEach(date => {
-  // console.log(new Date(date))
+  console.log(new Date(date))
+  // '2019-11-18T21:31:17.178Z',
 })
 
 console.log(new Date(2023, 1, 13, 22, 30, 45))
