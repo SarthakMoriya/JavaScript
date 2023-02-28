@@ -53,7 +53,7 @@ console.log(allSection) //Returns nodeList
 
 document.getElementById('section--1');
 const allButtons = document.getElementsByTagName('button')//htmlCollection
-console.log(allButtons) //Returns HTMLCollection 
+console.log(typeof allButtons) //Returns HTMLCollection 
 // HTML collection changes if we delete add particular elements but Nodelist remains same
 
 console.log(document.getElementsByClassName('btn'))//htmlCollections
@@ -152,3 +152,40 @@ logo.classList.contains('c', 'j')
 logo.className = 'jonas';
 
 
+// SCROLLING
+//lear more wal button
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1')//scrolled here
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords)
+
+  console.log(e.target.getBoundingClientRect())
+  // x = distance in x-axis from border of the browser
+  // y = distance in y-axis from top of the screen
+  // relative to current viewport uske hisab se x y deta hai
+
+  console.log("Current Scroll (X/Y):", window.pageXOffset, window.pageYOffset)
+  // currently hm log kitna page x-y direction me scroll kr chuke hai who batatat hai
+
+  console.log('Height/Width of current viewPort::', document.documentElement.clientHeight, document.documentElement.clientWidth)
+  // agar console open krde toh km hojayega viewport
+
+  // Scroll add krege
+  // window.scrollTo(s1coords.left, s1coords.top);
+  // now s1coords are relative to viewport so this work only if we are at top of the page like from top of the page the section1 is 700px but as we scroll this 700px decreases so we need change it make it relative to viewport to get desired results
+
+  // currentposition + currentScroll in x-y directions
+  // window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth'
+  // })
+
+  // MODERN WAY 
+  // sectiontoScrolled.scrollIntoView({behaviour:'smooth'})
+  section1.scrollIntoView({ behavior: 'smooth' })
+})

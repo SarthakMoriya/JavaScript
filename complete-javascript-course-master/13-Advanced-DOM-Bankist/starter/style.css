@@ -18,6 +18,7 @@
   margin: 0;
   padding: 0;
   box-sizing: inherit;
+  /* scroll-behavior: smooth; */
 }
 
 html {
@@ -31,6 +32,7 @@ body {
   color: #444;
   line-height: 1.9;
   background-color: #f3f3f3;
+  
 }
 
 /* GENERAL ELEMENTS */
