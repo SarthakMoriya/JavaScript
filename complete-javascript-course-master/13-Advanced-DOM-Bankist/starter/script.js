@@ -189,3 +189,29 @@ btnScrollTo.addEventListener('click', function (e) {
   // sectiontoScrolled.scrollIntoView({behaviour:'smooth'})
   section1.scrollIntoView({ behavior: 'smooth' })
 })
+
+
+
+// EVENT LISTENERS
+// const h1 = document.querySelector('h1');
+
+// // MODERN WAY
+// // if we want to remove an event on a element we need to make an external function 
+// const alertH1 = () => {
+//   alert("Hey lolo!")
+
+//   h1.removeEventListener('mouseenter', alertH1)
+//   //we can declare this event removal anywhere in our code even in a settimeout function anythig
+//   // There are many more events search MDN Docs
+// }
+// h1.addEventListener('mouseenter', alertH1)
+
+
+document.querySelectorAll('.nav__link').forEach(link => {
+  link.addEventListener('click', function (el) {
+    el.preventDefault();
+    const id = this.getAttribute('href')
+    // console.log(id)
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' })
+  })
+})
