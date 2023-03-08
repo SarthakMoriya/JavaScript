@@ -274,3 +274,5 @@ document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer
       header.style.color = 'blue';
     });
   })();
+
+//   khi

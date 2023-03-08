@@ -215,3 +215,38 @@ document.querySelectorAll('.nav__link').forEach(link => {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' })
   })
 })
+
+
+// DOM traversing
+// querySelector is mostly used on document. howerver if we want to select  elements inside a section or part and same named elements may be present in all html then we use its parent element like h1.querySelector()........
+
+const h1 = document.querySelector('h1')//first h1 chukega
+
+console.log(h1.querySelectorAll('.highlight'))//only the elements that are inside this first h1 tag as parent will be selected not all ...
+
+console.log(h1.childNodes)//andar ka sara kuch text comment br sab kuch
+console.log(h1.children)//only html tags like here span br span
+
+// firstChild
+h1.firstElementChild.style.color = 'white'
+
+// lastChild
+h1.lastElementChild.style.color = 'white'
+
+// Going Upwards: parents pe
+console.log(h1.parentNode)
+console.log(h1.parentElement)
+
+h1.closest('.header').style.backgroundColor = 'red';
+// means which is closest parent of selected h1 having class header
+
+// Going Sideways : Siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling)
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling)
+
+// to get all siblings we select parent then its children
+console.log(h1.parentElement.children)
+console.log([...h1.parentElement.children])
