@@ -250,3 +250,4 @@ console.log(h1.nextSibling)
 // to get all siblings we select parent then its children
 console.log(h1.parentElement.children)
 console.log([...h1.parentElement.children])
+// 'l-;lp
