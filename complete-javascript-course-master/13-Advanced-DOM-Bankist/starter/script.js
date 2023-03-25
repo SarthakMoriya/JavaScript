@@ -218,7 +218,7 @@ document.querySelectorAll('.nav__link').forEach(link => {
 
 
 // DOM traversing
-// querySelector is mostly fh used on document. howerver if we want to select  elements inside a section or part and same named elements may be present in all html then we use its parent element like h1.querySelector()........
+// querySelector is mostly used on document. howerver if we want to select  elements inside a section or part and same named elements may be present in all html then we use its parent element like h1.querySelector()........
 
 const h1 = document.querySelector('h1')//first h1 chukega
 
