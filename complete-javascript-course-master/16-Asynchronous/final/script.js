@@ -131,17 +131,7 @@ setTimeout(() => {
 // Handling Rejected Promises
 // Throwing Errors Manually
 
-// const getCountryData = function (country) {
-//   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
-//     .then(function (response) {
-//       console.log(response);
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       console.log(data);
-//       renderCountry(data[0]);
-//     });
-// };
+  
 
 // const getCountryData = function (country) {
 //   // Country 1

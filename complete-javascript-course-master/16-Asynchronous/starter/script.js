@@ -73,4 +73,42 @@ const jatinBadhwa = new Promise((resolve, reject) => {
 })
 
 jatinBadhwa.then((data) => { console.log("Is Jatin a Badhwaa " + data) })
-            .catch((err) => { console.log(err)})
+  .catch((err) => { console.log(err) })
+
+const promiseFunc = () => {
+  return new Promise((resolve, reject) => {
+    const number = Math.floor(Math.random() * 100);
+
+    if (number >= 50) {
+      resolve('Number greater than 50:' + number)
+    } else {
+      reject('Number less than 50 :' + number)
+    }
+  })
+}
+
+const result1 = promiseFunc()
+result1.then(data => console.log(data)).catch(err => console.log(err))
+
+const getPosition = () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      position => resolve(position),
+      err => reject(err)
+    )
+  })
+}
+
+const location1 = getPosition();
+location1.then(data => console.log(data.coords)).catch(err => console.log(err))
+
+try {
+  const c=7;
+  if(c===7){
+    throw new Error("Invalid")
+  }
+} catch (error) {
+  console.log(error)
+}
+
+
